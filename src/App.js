@@ -1,26 +1,47 @@
 import React from 'react';
+import { compose } from '@wordpress/compose';
+import { withSelect, withDispatch } from '@wordpress/data';
+
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+function App(props) {
+  console.log('props', props);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          List: {JSON.stringify(props.list)}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+        Select page:
+        {
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          new Array(10).fill(0).map((e,i) => <a key={i} onClick={() => props.changePage(i+1)}> {i+1} </a>)
+        }
+        </p>
+        {
+          }
       </header>
     </div>
   );
 }
 
-export default App;
+const applyWithSelect = withSelect( select => {
+	return {
+		list: select( 'liststore' ).getList(),
+		page: select( 'liststore' ).getPage(),
+	};
+} );
+
+const applyWithDispatch = withDispatch( dispatch => {
+	return {
+		changePage: dispatch( 'liststore' ).changePage,
+	};
+} );
+
+export default compose(
+	applyWithSelect,
+	applyWithDispatch
+)( App );

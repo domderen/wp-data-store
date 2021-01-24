@@ -1,4 +1,4 @@
-import { registerStore, select } from "@wordpress/data";
+import { register, select, createReduxStore } from "@wordpress/data";
 
 const REPLACE = "REPLACE";
 const CHANGE_PAGE = "CHANGE_PAGE";
@@ -28,9 +28,9 @@ const storeActions = {
       page
     };
   }
-};
+}; 
 
-export default registerStore("liststore", {
+const store = createReduxStore("liststore", {
   reducer(state = initialState, action) {
     // eslint-disable-next-line default-case
     switch (action.type) {
@@ -80,3 +80,5 @@ export default registerStore("liststore", {
     }
   }
 });
+
+export default register(store);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 
